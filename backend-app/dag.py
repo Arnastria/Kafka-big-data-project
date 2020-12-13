@@ -17,7 +17,7 @@ dag1 = DAG(
     'rating_data_stream',  catchup=False, default_args=default_args, schedule_interval=timedelta(seconds=10))
 
 bash_task = BashOperator(
-    task_id='5s_tracking_data',
+    task_id='5s_rating_data',
     bash_command='python /usr/local/airflow/dags/app.py',
     dag=dag1
 )

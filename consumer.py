@@ -14,7 +14,7 @@ consumer = KafkaConsumer(
 
 for event in consumer:
     event_data = event.value
-    
+
     print("====================================")
     print(event_data)
     print()

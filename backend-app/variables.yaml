@@ -1,7 +1,7 @@
 endpoint: http://www.google.com
 kafka_host: dummy-producer_kafka1_1:9092
 database:
-  host: postgres
+  host: localhost
   db: postgres
   username: postgres
   password: postgres

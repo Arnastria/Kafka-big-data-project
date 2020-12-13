@@ -2,7 +2,6 @@ import argparse
 import requests
 import yaml
 from sqlalchemy import create_engine
-# from kafka import KafkaProducer
 import time
 from json import dumps
 
@@ -34,7 +33,7 @@ class QueryList:
     @staticmethod
     def get_rating_insert_query(data):
         query = open(
-            '/usr/local/airflow/dags/sql/insert_query_rating.sql', 'r')
+            './backend-app/sql/insert_query_rating.sql', 'r')
         statement = query.read()
         query.close()
         statement = statement.format(
@@ -47,12 +46,12 @@ class QueryList:
         return UPDATE_QUERY
 
 
-with open('/usr/local/airflow/dags/variables.yaml') as var:
+with open('./backend-app/variables.yaml') as var:
     variables = yaml.load(var)
 
     db = DatabaseConnector(variables)
-    datas = [{"product_name": "Brother", "score": 12},
-             {"product_name": "Sister", "score": 23}]
+    datas = [{"product_name": "YAHAAALO", "score": 12},
+             {"product_name": "NEED_SOME_REST", "score": 23}]
     db.insert_rating_data(datas)
 
 print("--- data scrapping finished ---")
