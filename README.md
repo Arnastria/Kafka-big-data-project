@@ -37,10 +37,18 @@ docker-compose -f docker-compose-pdb.yaml exec kafka /kafka/bin/kafka-console-co
 ```
 docker-compose -f docker-compose-pdb.yaml exec postgres env PGOPTIONS="--search_path=rating" bash -c 'psql -U $POSTGRES_USER postgres'
 ```
-
 ### Modify records using bash command (WARNING : DUMMY):
 ```
 ./table-add-command.sh   
+```
+### Listen to the stream using python :
+* make sure you've already installed kafka-python in pip
+```
+python consumer.py   
+```
+### Modify records using using python :
+```
+python queryinserter.py
 ```
 ### Shut down the cluster
 ```
@@ -49,6 +57,6 @@ docker-compose -f docker-compose-pdb.yaml down
 
 ## TODO
 -------
-- [ ] Listen using python (kafka-python) 
+- [v] Listen using python (kafka-python) 
 - [ ] Simulate data stream every x seconds using airflow
 - [ ] create proper DB. please look at ```init-table.sql``` to see that the table is still dummy. Adjust with the dataset.

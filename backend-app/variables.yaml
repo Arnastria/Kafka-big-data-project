@@ -1,0 +1,8 @@
+endpoint: http://www.google.com
+kafka_host: dummy-producer_kafka1_1:9092
+database:
+  host: localhost
+  db: postgres
+  username: postgres
+  password: postgres
+  port: 5432
