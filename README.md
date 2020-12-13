@@ -3,8 +3,11 @@
 ----
 This is a starter project for simulating CDC process using Apache Kafka and Debezium
 
+link to frontend project is [here](https://github.com/Arnastria/pdb-kafka-frontend-django)
+
 Prerequisite :
 - Docker Compose. Get it from the [official instalation documentation](https://docs.docker.com/compose/install/)
+- psql (postgresql client)
 - Python
 
 ## How to Run
@@ -57,6 +60,6 @@ docker-compose -f docker-compose-pdb.yaml down
 
 ## TODO
 -------
-- [v] Listen using python (kafka-python) 
+- [x] Listen using python (kafka-python) 
 - [ ] Simulate data stream every x seconds using airflow
 - [ ] create proper DB. please look at ```init-table.sql``` to see that the table is still dummy. Adjust with the dataset.
