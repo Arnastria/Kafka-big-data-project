@@ -1,2 +1,2 @@
 
-INSERT INTO rating.product_rating VALUES (default,'{product_name}','{score}') ON CONFLICT (id) DO NOTHING;
+INSERT INTO rating.product_rating VALUES (default,'{clothing_id}','{age}','{title}','{review}','{rating}','{recommended}','{positive_feedback}','{division}','{department}','{class_name}') ON CONFLICT (id) DO NOTHING;
