@@ -2,17 +2,25 @@ from time import sleep
 from json import dumps
 from kafka import KafkaProducer
 import random
+import linecache
 
 producer = KafkaProducer(
     bootstrap_servers=[
         'localhost:9093'], value_serializer=lambda x: dumps(x).encode('utf-8'))
 
-# The data is still dummy
-x = ['sentinel', 'havoc', 'charai', 'G7 Scout', 'Volt SMG', 'Prowler SMG',
-     'R-99', 'R-301 Carbine', 'Hemlock Burst AR', 'Flatline', 'Masstiff']
+with open('women_westernwear.csv') as data_csv:
+    lines = sum(1 for line in data_csv)
+    for i in range(1000):
+        try:
+            line_number = random.randrange(1, lines)
+            time_random = random.randrange(8, 15)
+        except ValueError as e:
+            line_number = 1
+            time_random = 10
 
-for i in range(1000):
-    data = {'id': i, 'name': random.choice(x)}
-    producer.send('most-sales-product', value=data)
-    print("sending message... "+str(data))
-    sleep(5)
+        line = linecache.getline('women_westernwear.csv', line_number)
+        data = {"id": line_number, "product name": line.split(',')[0]}
+
+        print("[sending data...] "+str(data))
+        producer.send('sales.most-sales-product', value=data)
+        sleep(time_random)
