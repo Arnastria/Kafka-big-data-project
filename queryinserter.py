@@ -37,7 +37,7 @@ class QueryList:
         statement = query.read()
         query.close()
         statement = statement.format(
-            product_name=data['product_name'], score=data['score'])
+            clothing_id=data['clothing_id'], age=data['age'], title=data['title'], review=data['review'], rating=data['rating'], recommended=data['recommended'], positive_feedback=data['positive_feedback'], division=data['division'], department=data['department'], class_name=data['class_name'])
         return statement
 
     @staticmethod
@@ -50,8 +50,7 @@ with open('./backend-app/variables.yaml') as var:
     variables = yaml.load(var)
 
     db = DatabaseConnector(variables)
-    datas = [{"product_name": "YAHAAALO", "score": 12},
-             {"product_name": "NEED_SOME_REST", "score": 23}]
+    datas = [{"clothing_id": 1, "age": 35, "title": "haha", "review": "haha", "rating": 4, "recommended": 1, "positive_feedback": 0, "division": "General", "department": "Dresses","class_name": "Dresses"}]
     db.insert_rating_data(datas)
 
 print("--- data scrapping finished ---")
