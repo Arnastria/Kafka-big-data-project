@@ -47,10 +47,11 @@ class QueryList:
 
 
 with open('./backend-app/variables.yaml') as var:
-    variables = yaml.load(var)
+    variables = yaml.load(var, Loader=yaml.FullLoader)
 
     db = DatabaseConnector(variables)
-    datas = [{"clothing_id": 1, "age": 35, "title": "haha", "review": "haha", "rating": 4, "recommended": 1, "positive_feedback": 0, "division": "General", "department": "Dresses","class_name": "Dresses"}]
+    datas = [{"clothing_id": 1, "age": 35, "title": "haha", "review": "haha", "rating": 4, "recommended": 1,
+              "positive_feedback": 0, "division": "General", "department": "Dresses", "class_name": "Dresses"}]
     db.insert_rating_data(datas)
 
 print("--- data scrapping finished ---")
