@@ -1,7 +1,9 @@
 # #!/bin/bash
 # psql -U postgres -h localhost -c "CREATE DATABASE RATING;"
+echo "initiating table.."
 psql -U postgres -h localhost -d postgres -a -f "init-table.sql"
 
+echo "\n creating connector.."
 curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '
 {
 	"name": "rating-connector",
@@ -19,6 +21,7 @@ curl -X POST -H "Accept:application/json" -H "Content-Type:application/json" loc
 	}
   }'
 
+echo "\n show rating-connector.."
 curl -X GET -H "Accept:application/json" localhost:8083/connectors/rating-connector
 
 #=============================
