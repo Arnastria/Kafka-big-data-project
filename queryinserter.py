@@ -65,17 +65,16 @@ with open('./backend-app/variables.yaml') as var:
     ratings = []
     
     for row in zip(*data.to_dict("list").values()):
-        if len(row) == 11:
-            ratings.append({"clothing_id": row[1], 
-                        "age": row[2], 
-                        "title": row[3], 
-                        "review": row[4],  
-                        "rating": row[5],  
-                        "recommended": row[6], 
-                        "positive_feedback": row[7],
-                        "division": row[8],  
-                        "department": row[9], 
-                        "class_name": row[10]})
+        ratings.append({"clothing_id": row[1], 
+                    "age": row[2], 
+                    "title": row[3], 
+                    "review": row[4],  
+                    "rating": row[5],  
+                    "recommended": row[6], 
+                    "positive_feedback": row[7],
+                    "division": row[8],  
+                    "department": row[9], 
+                    "class_name": row[10]})
     db.insert_rating_data(ratings)
 
 print("--- data scrapping finished ---")
