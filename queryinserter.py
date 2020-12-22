@@ -22,12 +22,13 @@ class DatabaseConnector:
         self.engine = create_engine(url_db, client_encoding='utf8')
 
     def insert_rating_data(self, rating_data):
-        for i in rating_data:
-            self.engine.execute(QueryList.get_rating_insert_query(i))
+        half = int(len(rating_data)/2)
+        print(half)
+        for i in range(200):
+            self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
         
         starttime = time.time()
         while True:
-            start = 0
             end = 5
             for i in range(end):
                 self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
@@ -59,12 +60,27 @@ with open('./backend-app/variables.yaml') as var:
     variables = yaml.load(var)
     db = DatabaseConnector(variables)
 
-    raw_data = pd.read_csv (r'./dummy.csv', delimiter=';')
-    data = raw_data.dropna().astype({'clothing_id':int,'age':int,'rating':int,'recommended':int,'positive_feedback':int}) 
+    # out = []
+    # with open('test5.csv') as csv_file:
+    #     reader = csv.reader(csv_file, delimiter=',')
+    #     header = next(reader)
+    #     for row in reader:
+    #         if (len(row) == len(header)):
+    #             out.append(row)
+
+    # df = pd.DataFrame(out, columns=header)
+    # data = df[df.positive_feedback.apply(lambda x: x.isnumeric())]
+    # print(len(data))
+    # data.to_csv(r'./test6.csv', index = False)
+
+    raw_data = pd.read_csv (r'./review.csv', delimiter=',')
+    data = raw_data.dropna()
+
+    datas = data.astype({'clothing_id':int,'age':int,'rating':int,'recommended':int,'positive_feedback':int})
+    print(datas)
 
     ratings = []
-    
-    for row in zip(*data.to_dict("list").values()):
+    for row in zip(*datas.to_dict("list").values()):
         ratings.append({"clothing_id": row[1], 
                     "age": row[2], 
                     "title": row[3], 
