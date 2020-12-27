@@ -22,11 +22,11 @@ class DatabaseConnector:
 
     def insert_rating_data(self, rating_data):
         len_data = int(len(rating_data))
-        for i in range(200):
-            self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
+        # for i in range(200):
+        #     self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
         
-        while True:
-            start = 0
+        start = 0
+        while True:    
             self.engine.execute(QueryList.get_rating_insert_query(rating_data[start]))
             start +=1
             if start == len_data:
