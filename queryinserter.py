@@ -23,24 +23,18 @@ class DatabaseConnector:
 
     def insert_rating_data(self, rating_data):
         half = int(len(rating_data)/2)
-        print(half)
         for i in range(200):
             self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
         
         starttime = time.time()
         while True:
-            end = 5
-            for i in range(end):
+            for i in range(1):
                 self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
-                if i == end:
-                    i = 0
+                i = 0
             print("tick")
             time.sleep(5.0 - ((time.time() - starttime) % 5.0))
 
-            
-
 class QueryList:
-
     @staticmethod
     def get_rating_insert_query(data):
         query = open(
