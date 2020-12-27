@@ -19,7 +19,7 @@ with open('women_westernwear.csv') as data_csv:
             time_random = 10
 
         line = linecache.getline('women_westernwear.csv', line_number)
-        data = {"id": line_number, "product name": line.split(',')[0]}
+        data = {"id": line_number, "productName": line.split(',')[0]}
 
         print("[sending data...] "+str(data))
         producer.send('sales.most-sales-product', value=data)
