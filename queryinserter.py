@@ -1,5 +1,4 @@
 import argparse
-import requests
 import yaml,csv
 from sqlalchemy import create_engine
 import time
@@ -26,13 +25,12 @@ class DatabaseConnector:
         for i in range(200):
             self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
         
-        starttime = time.time()
         while True:
-            for i in range(1):
-                self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
-                i = 0
+            start = 0
+            self.engine.execute(QueryList.get_rating_insert_query(rating_data[start]))
+            start +=1
             print("tick")
-            time.sleep(5.0 - ((time.time() - starttime) % 5.0))
+            time.sleep(5)
 
 class QueryList:
     @staticmethod
