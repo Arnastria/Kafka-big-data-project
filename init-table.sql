@@ -1,4 +1,4 @@
-DROP SCHEMA IF EXISTS inventory CASCADE;
+DROP SCHEMA IF EXISTS rating CASCADE;
 CREATE SCHEMA rating;
 SET search_path TO rating;
 
