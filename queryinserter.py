@@ -77,7 +77,7 @@ with open('./backend-app/variables.yaml') as var:
                     "division": row[8],  
                     "department": row[9], 
                     "class_name": row[10]})
-    # db.insert_rating_data(ratings)
+    db.insert_rating_data(ratings)
     db.simulate_rating_data(ratings)
 
 print("--- data scrapping finished ---")
