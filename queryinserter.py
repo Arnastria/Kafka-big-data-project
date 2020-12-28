@@ -1,9 +1,12 @@
 import argparse
 import yaml,csv
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,text
 import time
 from json import dumps
+import random
+import linecache
 import pandas as pd
+
 start_time = time.time()
 
 class DatabaseConnector:
@@ -21,17 +24,18 @@ class DatabaseConnector:
         self.engine = create_engine(url_db, client_encoding='utf8')
 
     def insert_rating_data(self, rating_data):
-        len_data = int(len(rating_data))
-        # for i in range(200):
-        #     self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
+        for i in range(int(len(rating_data))):
+            self.engine.execute(QueryList.get_rating_insert_query(rating_data[i]))
         
+    def simulate_rating_data(self, rating_data):  
         start = 0
+        end = int(len(rating_data))
         while True:    
             self.engine.execute(QueryList.get_rating_insert_query(rating_data[start]))
+            print(start)
             start +=1
-            if start == len_data:
+            if start == end:
                 start = 0
-            print("tick")
             time.sleep(5)
 
 class QueryList:
@@ -43,7 +47,8 @@ class QueryList:
         query.close()
         statement = statement.format(
             clothing_id=data['clothing_id'], age=data['age'], title=data['title'], review=data['review'], rating=data['rating'], recommended=data['recommended'], positive_feedback=data['positive_feedback'], division=data['division'], department=data['department'], class_name=data['class_name'])
-        return statement
+        final = text(statement)
+        return final
 
     @staticmethod
     def get_update_query():
@@ -54,24 +59,11 @@ with open('./backend-app/variables.yaml') as var:
     variables = yaml.load(var)
     db = DatabaseConnector(variables)
 
-    # out = []
-    # with open('test5.csv') as csv_file:
-    #     reader = csv.reader(csv_file, delimiter=',')
-    #     header = next(reader)
-    #     for row in reader:
-    #         if (len(row) == len(header)):
-    #             out.append(row)
-
-    # df = pd.DataFrame(out, columns=header)
-    # data = df[df.positive_feedback.apply(lambda x: x.isnumeric())]
-    # print(len(data))
-    # data.to_csv(r'./test6.csv', index = False)
-
     raw_data = pd.read_csv (r'./review.csv', delimiter=',')
     data = raw_data.dropna()
 
     datas = data.astype({'clothing_id':int,'age':int,'rating':int,'recommended':int,'positive_feedback':int})
-    print(datas)
+    # print(datas)
 
     ratings = []
     for row in zip(*datas.to_dict("list").values()):
@@ -86,6 +78,7 @@ with open('./backend-app/variables.yaml') as var:
                     "department": row[9], 
                     "class_name": row[10]})
     db.insert_rating_data(ratings)
+    db.simulate_rating_data(ratings)
 
 print("--- data scrapping finished ---")
 print("--- execution delta: %s seconds ---" % (time.time() - start_time))
